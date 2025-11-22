@@ -91,6 +91,7 @@ const App: React.FC = () => {
   const [userName, setUserName] = useState('');
   const [language, setLanguage] = useState<Language>('en');
   const [showInstructions, setShowInstructions] = useState(false);
+  const [hasApiKey] = useState(!!process.env.API_KEY);
   
   // Local role counts for offline mode
   const [offlineRoleCounts, setOfflineRoleCounts] = useState<Record<RoleType, number>>({
@@ -807,6 +808,14 @@ const App: React.FC = () => {
                 }
              </button>
           </div>
+          
+          {/* API Key Missing Banner - Start Screen */}
+          {!hasApiKey && (
+            <div className="mt-4 p-3 rounded bg-yellow-900/20 border border-yellow-700 text-yellow-200 text-xs text-center">
+              ⚠ <strong>No API Key Detected.</strong> Game will run, but AI bots will not chat. <br/>
+              Create a <code>.env</code> file with <code>API_KEY=...</code> to enable full features.
+            </div>
+          )}
         </div>
       </div>
     );
@@ -981,6 +990,13 @@ const App: React.FC = () => {
     <div className="min-h-screen bg-slate-950 text-slate-200 flex flex-col font-sans">
       {showInstructions && <InstructionsModal />}
       
+      {/* Missing Key Banner */}
+      {!hasApiKey && (
+         <div className="bg-yellow-600/20 border-b border-yellow-500/50 text-yellow-200 text-center text-xs p-1 font-mono">
+           ⚠ API_KEY missing. Bots will not chat. Check README.
+         </div>
+      )}
+
       {/* Header */}
       <header className="bg-slate-900 border-b border-slate-800 p-4 flex justify-between items-center sticky top-0 z-20 shadow-lg">
         <div className="flex items-center gap-4">
