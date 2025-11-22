@@ -8,6 +8,8 @@ export default defineConfig(({ mode }) => {
     define: {
       // Polyfill process.env.API_KEY for the client-side Gemini service
       'process.env.API_KEY': JSON.stringify(env.API_KEY),
+      // Define global for libraries that expect it
+      global: 'window',
     },
     server: {
       port: 1234,
