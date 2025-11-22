@@ -38,22 +38,21 @@ A modern, web-based implementation of the classic social deduction game **Werewo
     ```
 
 ### Troubleshooting Dependencies
-If you encounter `ETARGET` or `No matching version` errors during install:
+If you encounter `ETARGET` or `No matching version` errors during install, perform a clean install:
 
-1.  Delete the existing lock file and modules:
-    *   **Windows (PowerShell)**:
-        ```powershell
-        rm package-lock.json
-        rm -r node_modules
-        npm cache clean --force
-        npm install
-        ```
-    *   **Mac/Linux**:
-        ```bash
-        rm -rf package-lock.json node_modules
-        npm cache clean --force
-        npm install
-        ```
+*   **Windows (PowerShell)**:
+    ```powershell
+    rm package-lock.json
+    rm -r node_modules
+    npm cache clean --force
+    npm install
+    ```
+*   **Mac/Linux**:
+    ```bash
+    rm -rf package-lock.json node_modules
+    npm cache clean --force
+    npm install
+    ```
 
 ## Configuration
 

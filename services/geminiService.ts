@@ -5,8 +5,16 @@ import { ROLES, TEXT } from "../constants";
 
 const getAI = () => {
   const apiKey = process.env.API_KEY;
-  if (!apiKey) return null;
-  return new GoogleGenAI({ apiKey });
+  if (!apiKey) {
+    console.warn("API_KEY not found in environment variables");
+    return null;
+  }
+  try {
+    return new GoogleGenAI({ apiKey });
+  } catch (e) {
+    console.error("Failed to initialize GoogleGenAI:", e);
+    return null;
+  }
 };
 
 export const generateBotChatter = async (
@@ -22,7 +30,6 @@ export const generateBotChatter = async (
   const aliveCount = gameState.players.filter(p => p.isAlive).length;
   
   // Find someone suspicious (random for now, or based on vote history if we tracked it better)
-  // For simple chatter, picking a random alive person to accuse or agree with makes it feel alive.
   const otherPlayers = gameState.players.filter(p => p.id !== speakingBot.id && p.isAlive);
   const randomTarget = otherPlayers.length > 0 ? otherPlayers[Math.floor(Math.random() * otherPlayers.length)].name : "someone";
 
@@ -52,8 +59,9 @@ export const generateBotChatter = async (
       model: 'gemini-2.5-flash',
       contents: prompt,
     });
-    return response.text.replace(/"/g, '').trim();
+    return response.text ? response.text.replace(/"/g, '').trim() : "...";
   } catch (error) {
-    return lang === 'zh' ? "我在思考..." : "I am thinking...";
+    console.error("Gemini API Error:", error);
+    return lang === 'zh' ? "..." : "...";
   }
 };
