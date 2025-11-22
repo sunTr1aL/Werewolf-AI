@@ -1,4 +1,3 @@
-
 # Werewolf AI (狼人杀)
 
 A modern, web-based implementation of the classic social deduction game **Werewolf** (Mafia). This application features a robust Single Player mode with AI opponents powered by Google's Gemini API, as well as a real-time Multiplayer mode for playing with friends.
@@ -20,14 +19,14 @@ A modern, web-based implementation of the classic social deduction game **Werewo
 
 ## Tech Stack
 
-*   **Frontend**: React 19, TypeScript, Tailwind CSS.
+*   **Frontend**: React, TypeScript, Tailwind CSS, Vite.
 *   **Backend**: Node.js, Express, Socket.io.
 *   **AI**: Google Gemini API (`@google/genai`).
 
 ## Prerequisites
 
-*   [Node.js](https://nodejs.org/) (v16 or higher)
-*   [npm](https://www.npmjs.com/) or yarn
+*   [Node.js](https://nodejs.org/) (v18 or higher recommended)
+*   [npm](https://www.npmjs.com/)
 *   A **Google Gemini API Key** (Get one at [aistudio.google.com](https://aistudio.google.com/))
 
 ## Installation
@@ -42,7 +41,7 @@ A modern, web-based implementation of the classic social deduction game **Werewo
 
 To enable the AI bots' chatting capabilities, you must configure your API key.
 
-1.  Create a `.env` file in the root directory (or set environment variables in your deployment platform).
+1.  Create a `.env` file in the root directory.
 2.  Add your Google API Key:
     ```env
     API_KEY=your_actual_api_key_here
@@ -50,17 +49,11 @@ To enable the AI bots' chatting capabilities, you must configure your API key.
 
 ## Running the Application
 
-To play Multiplayer, you need to run the backend server. For Single Player, the React app alone is sufficient (though some build setups requires the server context).
-
 ### 1. Start the Multiplayer Server
 The server handles game state synchronization and socket connections.
 
 ```bash
-# Using ts-node (recommended for dev)
-npx ts-node server.ts
-
-# OR if compiled to JS
-node dist/server.js
+npm run server
 ```
 *The server runs on port `3000` by default.*
 
@@ -68,18 +61,16 @@ node dist/server.js
 Open a new terminal window to run the React application.
 
 ```bash
-npm start
-# OR depending on your bundler (Vite, Parcel, etc.)
 npm run dev
 ```
 
-Open your browser to `http://localhost:1234` (or whatever port your bundler uses).
+Open your browser to `http://localhost:1234`.
 
 ## How to Play
 
 ### Hosting a Local Game (Multiplayer)
 
-1.  Ensure the **Server** is running (`npx ts-node server.ts`).
+1.  Ensure the **Server** is running.
 2.  Open the **Client** in your browser.
 3.  Select **Multiplayer**.
 4.  Enter your **Nickname**.
@@ -110,3 +101,4 @@ Open your browser to `http://localhost:1234` (or whatever port your bundler uses
     *   **Discussion**: Players speak in turn.
     *   **Voting**: Majority vote eliminates a player.
     *   **Death**: Dead players can chat with other dead players (and the Host), but cannot talk to the living.
+    *   **Sheriff Death**: If the Sheriff dies, they can choose to pass the badge to a successor or destroy it.
